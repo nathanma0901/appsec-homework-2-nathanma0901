@@ -1,0 +1,34 @@
+﻿Part 2: Encryption Implementation
+
+
+To implement encryption, I integrated django’s djfernet library into the project. In the models.py file, I utilized the "EncryptedTextField()" function, specifically adding it in line 45. This encrypts the card data in the database, preventing direct user access. Additionally, I commented out the binary field line to ensure gift card visibility. Importantly, I included necessary library imports at the top of models.py:
+
+
+from django.db import models
+from fernet_fields import *
+# --ADDED ADDITIONAL LIBRARY
+Key Management
+
+
+Identifying a vulnerability, I found the secret key plainly written in the settings.py file. To enhance security, I moved the key to an environment file (.env) using Python's decoupled module. I modified settings.py to load the key from the .env file:
+
+
+
+
+from decouple import config
+load_dotenv() 
+SECRET_KEY = config('SECRET_KEY')
+
+
+
+
+This approach offers two benefits: it separates code from settings for security and ensures the .env file remains private by adding it to .gitignore.
+
+
+In summary, I improved key management by storing the secret key in an environment file, enhancing security by isolating it from the codebase and GitHub repository.
+
+
+GitHub Actions & Testing
+
+
+For GitHub Actions, I set up the virtual environment, installed required libraries (pip, django, requests, virtualenv, djfernet, cryptography), and ran necessary commands, prioritizing test execution over server startup to ensure test case validation.
